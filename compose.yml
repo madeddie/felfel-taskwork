@@ -14,4 +14,10 @@ services:
     stop_signal: SIGINT
   redis:
     image: "redis:7.2-alpine"
+  prometheus:
+    image: "prom/prometheus:v2.47.2"
+    volumes:
+      - "./prometheus:/etc/prometheus"
+    ports:
+      - "9090:9090"
 

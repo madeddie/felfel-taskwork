@@ -1,0 +1,8 @@
+# python
+venv
+.venv
+
+# vim
+*~
+*.swp
+*.swo

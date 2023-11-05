@@ -8,23 +8,31 @@ It consists of:
 
 - basic piece of Python code, provided by FELFEL with minor modifications by applicant
 - requirements.txt and Dockerfile to build docker container
+- Docker Compose compose.yml for local testing
 
 ## How to run locally
 
-The application can be run directly on a local CLI, provided the required dependencies are available.
-Installing the dependencies is best done in a Python virtualenv, but left as exercise for the reader, find the dependencies in app/requirements.txt.
+To run the application locally we'll need to install the dependencies and have a running redis data store available.
+We'll make it simple by using Docker Compose to handle these steps for us.
 
-Since the application requires a Redis data store the initial usage will fail when we would view the webpage.
-To run a local Redis instance we'll use docker:
-
-```bash
-docker run --rm -p 6379:6379 --name taskwork-redis -d redis
-```
-
-Run the application:
+Docker Compose will build the docker container image if it's not yet available and spin up a redis container and the application container.
 
 ```bash
-REDIS_USERNAME="" REDIS_PASSWORD="" REDIS_HOST=localhost REDIS_PORT=6379 REDIS_DB=0 python app/main.py
+docker compose up
 ```
 
-The application itself listens on any local IP on port 8080, so http://localhost:8080 should work in a local browser.
+(add `-d` after `up` if you want the process to detach and not connected to the foreground shell)
+
+After the application starts up you can browse to http://localhost:8080 to see it in action. When you refresh the page the count should increase.
+
+To stop and remove the containers run:
+
+```bash
+docker compose down
+```
+
+When you bring the compose setup once more you'll notice the count has reset to 0.
+
+## How to run on Kubernetes
+
+## Hot to use the Helm chart

@@ -1,9 +1,13 @@
 import os
+from signal import signal, SIGTERM
 
 import redis
 from flask import Flask
 from prometheus_client import Counter, make_wsgi_app
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
+
+def handler(signal_received, frame):
+    exit(0)
 
 app = Flask(__name__)
 
@@ -36,4 +40,5 @@ def index():
 
 
 if __name__ == "__main__":
+    signal(SIGTERM, handler)
     app.run(host="0.0.0.0", port=8080)

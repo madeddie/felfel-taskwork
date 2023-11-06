@@ -28,7 +28,7 @@ After the application starts up you can browse to http://localhost:8080 to see i
 You can also browse to
 
 - http://localhost:/8080/metrics see the Prometheus metrics endpoint of the app
-- http://localhost:9090 Prometheus server to see the collected
+- http://localhost:9090 Prometheus server to see the collected metric
 
 To stop and remove the containers run:
 
@@ -40,12 +40,22 @@ When you bring up the compose setup once more you'll notice the count has reset 
 
 ## How to run on Kubernetes
 
-There are resources definitions provided in the ./k8s directory for a Deployment and connected Service and Ingres types.
+There are k8s resource definitions provided in the ./k8s directory for a Deployment and connected Service and Ingres types.
 Deploy to Kubernetes using the `deploy_k8s_local.sh` script.
 
 ```bash
 deploy_k8s_local.sh
 ```
+
+If your local k8s instance has the NGINX ingress deployed, you should be able to browse to http://felfel-taskwork.127.0.0.1.nip.io 
+which is a special DNS record that resolves to 127.0.0.1 and will connect to your local k8s instance.
+Without the NGINX ingress available, please use a port-forward to connect to the application like so:
+
+```bash
+kubectl port-forward $(kubectl get pods -l "app=felfel-taskwork" -o jsonpath="{.items[0].metadata.name}") 8080
+```
+
+Prometheus metrics will be collected based on the k8s resource annotations so no further configuration steps need to be taken.
 
 To clean up the resources run:
 

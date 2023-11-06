@@ -47,4 +47,8 @@ Deploy to Kubernetes using the `deploy_k8s_local.sh` script.
 deploy_k8s_local.sh
 ```
 
-## How to use the Helm chart
+To clean up the resources run:
+
+```bash
+deploy_k8s_local.sh delete
+```

@@ -1,13 +1,15 @@
 import os
-from signal import signal, SIGTERM
+from signal import SIGTERM, signal
 
 import redis
 from flask import Flask
 from prometheus_client import Counter, make_wsgi_app
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 
+
 def handler(signal_received, frame):
     exit(0)
+
 
 app = Flask(__name__)
 
@@ -15,7 +17,8 @@ app = Flask(__name__)
 app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {"/metrics": make_wsgi_app()})
 
 # Init prometheus counter outside of index function
-visit_count = Counter('visits', 'Number of visits to this app since it started')
+visit_count = Counter("visits", "Number of visits to this app since it started")
+
 
 @app.route("/")
 def index():

@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: felfel-taskwork-web
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: felfel-taskwork.127.0.0.1.nip.io
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: felfel-taskwork-web
+            port:
+              number: 8080

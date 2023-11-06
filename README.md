@@ -47,13 +47,15 @@ Deploy to Kubernetes using the `deploy_k8s_local.sh` script.
 deploy_k8s_local.sh
 ```
 
-If your local k8s instance has the NGINX ingress deployed, you should be able to browse to http://felfel-taskwork.127.0.0.1.nip.io 
+If your local k8s instance has the NGINX ingress controller deployed, you should be able to browse to http://felfel-taskwork.127.0.0.1.nip.io 
 which is a special DNS record that resolves to 127.0.0.1 and will connect to your local k8s instance.
-Without the NGINX ingress available, please use a port-forward to connect to the application like so:
+Without the NGINX ingress controller available, please use a port-forward to connect to the application like so:
 
 ```bash
 kubectl port-forward $(kubectl get pods -l "app=felfel-taskwork" -o jsonpath="{.items[0].metadata.name}") 8080
 ```
+
+Then browse to http://localhost:8080, just like with the Docker Compose setup.
 
 Prometheus metrics will be collected based on the k8s resource annotations so no further configuration steps need to be taken.
 
